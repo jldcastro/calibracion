@@ -13,7 +13,7 @@
 Route::resource('/login','LoginController');
 Route::get('logout', 'LoginController@logout');
 
-Route::group(['middleware' => ['auth' , 'administrador']],function(){
+
     Route::resource('administrador','AdministradorController');
     Route::resource('/usuario', 'UsuarioController');
     Route::resource('/cliente', 'ClienteController');
@@ -34,12 +34,21 @@ Route::group(['middleware' => ['auth' , 'administrador']],function(){
     Route::resource('/perdida','PerdidaController');
     Route::resource('/finalizado','FinalizadoController');
     Route::resource('/realizado','RealizadoController');
-});
+    Route::resource('/basculas','GraficaController');
+    Route::resource('/balanzas','Grafica2Controller');
+    Route::resource('/masas','Grafica3Controller');
+    Route::resource('/pesometros','Grafica4Controller');
+    Route::get('grafica_registros/{anio}/{mes}', 'GraficaController@registros_mes');
 
-Route::group(['middleware' => ['auth' , 'empleado']],function(){
-    Route::resource('empleado','EmpleadoController');
 
-});
 
+    Route::resource('/empleado', 'EmpleadoController');
+
+
+
+
+
+Route::resource('/administrativo', 'AdministrativoController');
+Route::resource('/secretaria', 'SecretariaController');
 
 

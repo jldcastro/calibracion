@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class Empleado
 {
@@ -15,10 +15,7 @@ class Empleado
      * @param  \Closure  $next
      * @return mixed
      */
-
-
     protected $auth;
-
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
@@ -29,8 +26,7 @@ class Empleado
         if($this->auth->user()->empleado()){
             return $next($request);
         }
-        else{
-            return view('errors.empleado.402');
-        }
+
+        return view('errors.empleado.401');
     }
 }

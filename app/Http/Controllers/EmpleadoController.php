@@ -21,7 +21,7 @@ class EmpleadoController extends Controller
 
     public function index()
     {
-        return view('empleado.home2');
+        return view('empleado.home');
     }
 
     /**

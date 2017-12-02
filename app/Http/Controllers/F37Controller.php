@@ -40,18 +40,31 @@ class F37Controller extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('administrador');
+        $this->middleware('empleado');
     }
 
     public function index(Request $request)
     {
+        if(Auth::user()->tipo_usuario=='administrador')
+        {
 
-        $f37s = F37::all();
-        $clientes = Cliente::all();
-        $vendedores = User::all();
-        return view('administrador.f37.index',["f37s"=>$f37s,"clientes"=>$clientes,"vendedores"=>$vendedores]);
+                $f37s = F37::all();
+                $clientes = Cliente::all();
+                $vendedores = User::all();
+                return view('administrador.f37.index',["f37s"=>$f37s,"clientes"=>$clientes,"vendedores"=>$vendedores]);
+        }
 
+        else if(Auth::user()->tipo_usuario=='empleado')
+        {
+
+            $f37s = F37::all();
+            $clientes = Cliente::all();
+            $vendedores = User::all();
+            return view('empleado.f37.index',["f37s"=>$f37s,"clientes"=>$clientes,"vendedores"=>$vendedores]);
+        }
     }
-    /**
+        /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

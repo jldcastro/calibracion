@@ -43,13 +43,42 @@ class LoginController extends Controller
     {
         if(Auth::attempt(['rut_usuario' => $request['rut_usuario'], 'password' => $request['password']])){
             if(Auth::user()->tipo_usuario=='administrador'){
-                return Redirect::to('administrador');
+                if(Auth::user()->estado=='Activo'){
+                    return Redirect::to('administrador');
+                }
+                else{
+                    return Redirect::to('/login')->with('mensaje2','Usted esta suspendido del sistema');
+                }
             }
+
             else if(Auth::user()->tipo_usuario=='empleado'){
-                return Redirect::to('empleado');
+                    if(Auth::user()->estado=='Activo'){
+                        return Redirect::to('empleado');
+                    }
+                    else{
+                        return Redirect::to('/login')->with('mensaje2','Usted esta suspendido del sistema');
+                    }
+            }
+
+            else if(Auth::user()->tipo_usuario=='administrativo'){
+                if(Auth::user()->estado=='Activo'){
+                    return Redirect::to('administrativo');
+                }
+                else{
+                    return Redirect::to('/login')->with('mensaje2','Usted esta suspendido del sistema');
+                }
+            }
+
+            else if(Auth::user()->tipo_usuario=='secretaria'){
+                if(Auth::user()->estado=='Activo'){
+                    return Redirect::to('secretaria');
+                }
+                else{
+                    return Redirect::to('/login')->with('mensaje2','Usted esta suspendido del sistema');
+                }
             }
         }
-        return Redirect::to('/login');
+        return Redirect::to('/login')->with('mensaje2','Rut y/o contraseña inválidos');
 
     }
 

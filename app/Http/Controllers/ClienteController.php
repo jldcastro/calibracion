@@ -21,18 +21,23 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 
     public function index()
     {
-            if(Auth::user()->tipo_usuario == 'administrador'){
-                $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
-                return view('administrador.clientes.index',compact('clientes'));
-            }
+        if(Auth::user()->tipo_usuario == 'administrador') {
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
+            return view('administrador.clientes.index', compact('clientes'));
+        }
 
-            else if(Auth::user()->tipo_usuario == 'empleado') {
-                $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
-                return view('empleado.clientes.index',compact('clientes'));
-            }
+        else if(Auth::user()->tipo_usuario == 'empleado') {
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
+            return view('empleado.clientes.index', compact('clientes'));
+        }
     }
 
     /**
@@ -42,14 +47,14 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        if(Auth::check()){
-            if(Auth::user()->tipo_usuario =='administrador'){
-                return view('administrador.clientes.create');
-            }
+        if(Auth::user()->tipo_usuario == 'administrador'){
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
+            return view('administrador.clientes.index',compact('clientes'));
+        }
 
-            if(Auth::user()->tipo_usuario =='empleado') {
-                return view('empleado.clientes.create');
-            }
+        else if(Auth::user()->tipo_usuario == 'empleado'){
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
+            return view('empleado.clientes.index',compact('clientes'));
         }
     }
 
@@ -62,16 +67,17 @@ class ClienteController extends Controller
     public function store(ClienteCreateRequest $request)
     {
         if(Auth::user()->tipo_usuario =='administrador') {
-        $cliente=new Cliente();
-        $cliente->nombre = $request->input('nombre') ;
-        $cliente->rut_cliente = $request->input("rut_cliente");
-        $cliente->ubicacion = $request->input('ubicacion') ;
-        $cliente->planta = $request->input('planta');
-        $cliente->estado = 'Activo';
-        $cliente->save();
+            $cliente=new Cliente();
+            $cliente->nombre = $request->input('nombre') ;
+            $cliente->rut_cliente = $request->input("rut_cliente");
+            $cliente->ubicacion = $request->input('ubicacion') ;
+            $cliente->planta = $request->input('planta');
+            $cliente->estado = 'Activo';
+            $cliente->save();
 
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
 
-            return view('administrador.clientes.index')->with('mensaje', 'Cliente registrado exitósamente');
+            return view('administrador.clientes.index',compact('clientes'))->with('mensaje', 'Cliente registrado exitósamente');
         }
 
         if(Auth::user()->tipo_usuario =='empleado'){
@@ -83,7 +89,10 @@ class ClienteController extends Controller
             $cliente->estado = 'Activo';
             $cliente->save();
 
-            return view('empleado.clientes.create')->with('mensaje', 'Cliente registrado exitósamente');
+
+            $clientes = Cliente::orderBy('nombre', 'asc')->paginate(20);
+
+            return view('empleado.clientes.create',compact('clientes'))->with('mensaje', 'Cliente registrado exitósamente');
         }
     }
 

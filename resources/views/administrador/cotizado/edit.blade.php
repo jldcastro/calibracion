@@ -279,6 +279,7 @@
                     <p class="text-black">MENCIONAR SI CLIENTE PUEDE  MOVILIZAR MASAS DE 500KG PARA CASOS QUE NO ES POSIBLE ENTRAR CON CAMION</p>
                     <textarea class="form-control observaciones" id="observaciones" name="observaciones" rows="3" cols="40" disabled><?= $f37->observaciones; ?></textarea>
                         </div>
+
      <div class="form-group">
         <div class="panel panel-primary">
             <div class="panel-body">

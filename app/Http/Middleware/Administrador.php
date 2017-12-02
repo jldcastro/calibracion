@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class Administrador
@@ -18,7 +19,6 @@ class Administrador
 
 
     protected $auth;
-
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
@@ -26,11 +26,13 @@ class Administrador
 
     public function handle($request, Closure $next)
     {
-        if($this->auth->user()->administrador()){
+        if($request->user()->administrador()){
+
             return $next($request);
         }
         else{
             return view('errors.administrador.401');
         }
+
     }
 }

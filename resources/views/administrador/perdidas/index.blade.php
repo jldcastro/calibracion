@@ -12,11 +12,14 @@
                 {{Session::get('mensaje2')}}
             </div>
         @endif
-        <div class="box-header">
-                    <h3 class="box-title">Lista de solicitudes pérdidas</h3>
-                    <br><br>
-                </div>
-        <table id="cotizado" class="table table-bordered table-hover">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Lista de solicitudes pérdidas</h3>
+                    </div>
+                <div class="box-body">
+<table id="cotizado" class="table table-bordered table-hover">
             <thead>
                 <th style="width: 10px;">N°</th>
                 <th style="width: 200px;">Cliente</th>
@@ -43,6 +46,9 @@
         @else
             <br/><div class='alert alert-warning'><label>No existe ninguna solicitud F-37 perdida</label></div>
         @endif
+            </div>
+        </div>
+
     @endsection
     @section('scripts')
     <script type="text/javascript">

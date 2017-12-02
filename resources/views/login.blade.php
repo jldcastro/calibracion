@@ -29,11 +29,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
+
     <div class="login-box">
         <div class="login-logo">
             <img src="imagenes/empresa/logo.png">
         </div>
         <div class="login-box-body">
+        @if(Session::has('mensaje2'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('mensaje2')}}
+                    </div>
+                @endif
             <p class="login-box-msg">Iniciar Sesión</p>
             {!! Form::open(['route' => 'login.store','method' => 'POST']) !!}
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
